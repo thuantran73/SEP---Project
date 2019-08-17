@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
     TextView txtName , txtDiachi;
     ImageView imgHinh;
 
+    SQLdatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         btnClick = (Button)findViewById(R.id.btnClick);
         txtName = (TextView)findViewById(R.id.txtName);
