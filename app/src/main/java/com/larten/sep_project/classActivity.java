@@ -27,8 +27,13 @@ public class classActivity extends AppCompatActivity {
     public static final String INPUT_DEPARTMENTS = "departments";
     ListView listviewmonhoc;
     ArrayList<MonHoc> arrayMonhoc;
-    DataHelper database;
+    SQLiteDatabase database;
     MonHocAdapter monHocAdapter;
+    private static String DB_Path = "/data/data/com.larten.sep_project/databases/";
+    private static String DB_Name = "SEP-DATA-ver";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +41,31 @@ public class classActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class);
         listviewmonhoc = (ListView) findViewById(R.id.listViewMonHoc);
 
-
-        database = new DataHelper(this, "SEP-DATA-ver2", null, 1);
-
-
-        arrayMonhoc = new ArrayList<>();
-
-            monHocAdapter = new MonHocAdapter(this, R.layout.activity_item_mon_hoc, arrayMonhoc);
-            listviewmonhoc.setAdapter(monHocAdapter);
+        String myPath = DB_Path + DB_Name;
+        database = SQLiteDatabase.openDatabase(myPath,null, SQLiteDatabase.OPEN_READONLY);
 
 
+//        arrayMonhoc = new ArrayList<>();
+//
+//            monHocAdapter = new MonHocAdapter(this, R.layout.activity_item_mon_hoc, arrayMonhoc);
+//            listviewmonhoc.setAdapter(monHocAdapter);
+//
+//
+//
+//            monHocAdapter.notifyDataSetChanged();
+//        Cursor dataMonhoc = database.Getdata("SELECT * FROM MonHoc");
+//        while (dataMonhoc.moveToNext()) {
+//            String ten = dataMonhoc.getString(1);
+//            int id = dataMonhoc.getInt(0);
+//            int hocsinh = dataMonhoc.getInt(2);
+//            String ngay = dataMonhoc.getString(3);
+//            String gio = dataMonhoc.getString(4);
+//            String phong = dataMonhoc.getString(5);
+//            arrayMonhoc.add(new MonHoc(id, ten, hocsinh, ngay, gio, phong));
+//
+//        }
 
-            monHocAdapter.notifyDataSetChanged();
-        Cursor dataMonhoc = database.Getdata("SELECT * FROM MonHoc");
-        while (dataMonhoc.moveToNext()) {
-            String ten = dataMonhoc.getString(1);
-            int id = dataMonhoc.getInt(0);
-            int hocsinh = dataMonhoc.getInt(2);
-            String ngay = dataMonhoc.getString(3);
-            String gio = dataMonhoc.getString(4);
-            String phong = dataMonhoc.getString(5);
-            arrayMonhoc.add(new MonHoc(id, ten, hocsinh, ngay, gio, phong));
 
-        }
 
 
 //        database = new SQLdatabase(this, "sep-database", null, 1);
@@ -143,5 +150,21 @@ public class classActivity extends AppCompatActivity {
 
         // data
 
+
+    public String[] getAppCategorydetail() {
+        String Table_Name="MonHoc";
+
+        String selectQuery = "SELECT  * FROM " + Table_Name;
+        SQLiteDatabase db;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String[] data = null;
+        if (cursor.moveToFirst()) {
+            do {
+                // get  the  data into array,or class variable
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return data;
+    }
     }
 
